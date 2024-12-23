@@ -12,8 +12,15 @@ Scenario: User can search for benefit_cells
 
 Scenario: User can add any product into a cart
     Given Open target main page
-    When Search for coffee
-    When Add any coffee into a cart
-    And Click on cart icon
-Then Verify coffee added to cart
+    When search for shoes
+    And Open the first shoes from the search results
+  Then Select each color and verify that it has been selected
+#    When Search for coffee
+#    When Add any coffee into a cart
+#    And Click on cart icon
+#Then Verify coffee added to cart
     # Enter steps here
+#  Scenario: User can Search for a product colors
+#    Given Search for a shoes on the Target website
+#    When Open the first shoes from the search results
+#    Then Select each color and verify that it has been selected
