@@ -9,10 +9,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 #from selenium.webdriver.support.wait import WebDriverWait
 
 
-@given('Open target home page')
-def open_target(context):
-    context.driver = webdriver.Chrome()
-    context.driver.get('https://www.target.com/')
+# @given('Open target home page')
+# def open_target(context):
+#     context.driver = webdriver.Chrome()
+#     context.driver.get('https://www.target.com/')
 
 @when('Click on the Sign In link')
 def click_signin_link(context):

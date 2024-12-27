@@ -11,10 +11,8 @@ Scenario: User can search for benefit_cells
     Then Verify there are at least 10 benefit cells
 
 Scenario: User can add any product into a cart
-    Given Open target main page
-    When search for shoes
-    And Open the first shoes from the search results
-  Then Select each color and verify that it has been selected
+    Given Open target product A-91511634 page
+    Then Select each color and verify that it has been selected
 #    When Search for coffee
 #    When Add any coffee into a cart
 #    And Click on cart icon

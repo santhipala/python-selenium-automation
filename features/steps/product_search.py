@@ -25,21 +25,24 @@ SELECTED_COLOR = (By.CSS_SELECTOR, "[data-test='@web/VariationComponent'] div")
 def open_target_circle_page(context):
     # context.driver.get('https://www.target.com/circle')
     context.driver.get(URL)
+@given('Open target product {product_id} page')
+def open_target(context, product_id):
+    context.driver.get(f'https://www.target.com/p/{product_id}')
+    sleep(8)
 
-
-@when('Search for {product}')
-def search_product(context, product):
-    context.driver.find_element(*SEARCH_PRODUCT).send_keys(product)
-    WebDriverWait(context.driver,10).until(
-        EC.element_to_be_clickable(SEARCH_BTN)).click()
-    # sleep(5)
-
-
-@then('Verify search worked for {product}')
-def verify_search_worked(context, product):
-    actual_search=product
-    expected_search_result=context.driver.find_element(*EXPECTED_SEARCH_RESULT).text
-    assert expected_search_result in actual_search, f'Expected text {expected_search_result} not in actual {actual_search}'
+# @when('Search for {product}')
+# def search_product(context, product):
+#     context.driver.find_element(*SEARCH_PRODUCT).send_keys(product)
+#     WebDriverWait(context.driver,10).until(
+#         EC.element_to_be_clickable(SEARCH_BTN)).click()
+#     # sleep(5)
+#
+#
+# @then('Verify search worked for {product}')
+# def verify_search_worked(context, product):
+#     actual_search=product
+#     expected_search_result=context.driver.find_element(*EXPECTED_SEARCH_RESULT).text
+#     assert expected_search_result in actual_search, f'Expected text {expected_search_result} not in actual {actual_search}'
 
 
 @then('Verify {expected} benefit cells')
@@ -116,44 +119,36 @@ def open_product(context, product):
         sleep(3)
 @then('Select each color and verify that it has been selected')
 def select_and_verify_colors(context):
-            # Wait for the color options to be visible
-            colors = WebDriverWait(context.driver, 20).until(
+    # Wait for the color options to be visible
+    colors = WebDriverWait(context.driver, 20).until(
                 EC.presence_of_all_elements_located(COLOR_OPTIONS)
             )
 
             # Loop through each color swatch and select it
-            # for index, color in enumerate(colors):
-            for color in colors:
-                try:
-                    # Click on the color swatch
-                    color.click()
-                    color=color.get_attribute("alt")
-                    sleep(3)  # Wait for color to be selected
+    for color in colors:
+        # try:
+                # Click on the color swatch
+                color.click()
+                color=color.get_attribute("alt")
+                print(f"Color: {color}")
+                sleep(2)  # Wait for color to be selected
 
-                    # Verify the color has been selected
-                    selected_color = WebDriverWait(context.driver, 20).until(
-                        EC.presence_of_element_located(SELECTED_COLOR)
-                    )
-                    selected_color = selected_color.text.split('\n')[1]
-                    print(f"Selected color: {selected_color}")
-                    assert selected_color == color,f"Color {color} is not matched with {selected_color} color."
+            # Verify the color has been selected
+                selected_color = context.driver.find_element(*SELECTED_COLOR).text  # 'Color\nBlack'
+                # print('Current color', {selected_color})
 
-                except Exception as e:
-                    print(f"Failed to select or verify color {color}: {e}")
-            # colors = context.driver.find_elements(*COLOR_OPTIONS)  # [webelement1, webelement2, webelement3]
-            # for color in colors:
-            #     color.click()
-            #     color=color.get_attribute("alt")
-            #     print(f"Color {color} selected.")
-            #     selected_color = context.driver.find_element(*SELECTED_COLOR).text
-            #     print('Current color', selected_color)
-            #
-            #     selected_color = selected_color.split('\n')[1]  # remove 'Color\n' part, keep Black'
-            #     # actual_colors.append(selected_color)
-            #     # print(selected_color)
-            #     assert selected_color == color,f'Selected color: {selected_color} does not match expected color: {color}'
+                selected_color1 = selected_color.split('\n')[1]
+                # selected.append(selected_color1)
+                # print(selected_color1)
 
-                print("All colors selected and verified.")
+                print(f"Selected color: {selected_color1}")
+                assert selected_color1 == color, f'Color {color} is not matched with {selected_color1} color.'
+        # except Exception as e:
+        #             print(f"Failed to select or verify color {color}: {e}")
+        #             print("All colors selected and verified.")
+        # finally:
+        #     context.driver.quit()
+
 
 
 # Step 4: Verify the product is in the cart
