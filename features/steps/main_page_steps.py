@@ -11,6 +11,10 @@ def open_target_main_page(context):
 def search_for_coffee(context, product):
     context.app.header.search_product()
 
+@when('Click on the Sign In link')
+def click_signin_link(context):
+    context.app.header.sign_in()
+
 
 @when('Click on cart icon')
 def click_cart(context):

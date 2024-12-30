@@ -3,6 +3,8 @@ from behave import given, when, then
 from time import sleep
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from pages.search_results_page import SearchResultsPage
+
 
 URL='https://www.target.com/p/A-54551690'
 CELLS=(By.CSS_SELECTOR, "[data-test*='@web/slingshot-components/CellsComponent/Link']")
@@ -54,59 +56,61 @@ def verify_bcells(context, expected):
     assert len(cells) >= len(expected), f'Expected {expected} links but got {len(cells)}'
 
 
-@when('Add any {product} into a cart')
-def add_to_cart(context, product):
-    # Step 1: Select the first product in the search results
-    first_product = WebDriverWait(context.driver,20).until(
-        EC.element_to_be_clickable(FIRST_PRODUCT))
-    first_product.click()
-    # sleep(2)  # Wait for product page to load
+# @when('Add any {product} into a cart')
+# def add_product(self, product):
 
-    # Step 2: Wait for the "Add to Cart" button to be clickable and scroll it into view
-    try:
-        add_to_cart_button = WebDriverWait(context.driver, 20).until(
-            EC.element_to_be_clickable(ADD_TO_CART_BTN))
-
-        # Scroll the button into view
-        context.driver.execute_script('arguments[0].scrollIntoView(true);', add_to_cart_button)
-
-        # Wait again to make sure the element is clickable
-        WebDriverWait(context.driver, 20).until(
-            EC.element_to_be_clickable(ADD_TO_CART_BTN)
-        )
-
-        add_to_cart_button.click()
-        print(f"Product {product} selected for the cart.")
-    except Exception as e:
-        print(f"Failed to add {product} selected for the cart: {e}")
-        raise
-    # Step 2a: Wait for the "Add to Cart navigation" button to be clickable and scroll it into view
-    try:
-        add_to_cart_side_nav_button = WebDriverWait(context.driver, 20).until(
-            EC.element_to_be_clickable(ADD_TO_CART_SIDE_NAV_BTN)
-        )
-
-        # Scroll the button into view
-        context.driver.execute_script("arguments[0].scrollIntoView(true);", add_to_cart_side_nav_button)
-
-        add_to_cart_side_nav_button.click()
-        print(f"Product {product} added to the cart.")
-    except Exception as e:
-        print(f"Failed to add {product} to the cart: {e}")
-        raise
-
-    sleep(2)  # Wait for the item to be added to the cart
-
-
-    try:
-        cart_icon = WebDriverWait(context.driver, 20).until(
-            EC.element_to_be_clickable(CART_ICON)
-        )
-        cart_icon.click()
-        print("Cart icon clicked successfully.")
-    except Exception as e:
-        print(f"Failed to click on cart icon: {e}")
-        raise
+# def add_to_cart(context, product):
+#     # Step 1: Select the first product in the search results
+#     first_product = WebDriverWait(context.driver,20).until(
+#         EC.element_to_be_clickable(FIRST_PRODUCT))
+#     first_product.click()
+#     # sleep(2)  # Wait for product page to load
+#
+#     # Step 2: Wait for the "Add to Cart" button to be clickable and scroll it into view
+#     try:
+#         add_to_cart_button = WebDriverWait(context.driver, 20).until(
+#             EC.element_to_be_clickable(ADD_TO_CART_BTN))
+#
+#         # Scroll the button into view
+#         context.driver.execute_script('arguments[0].scrollIntoView(true);', add_to_cart_button)
+#
+#         # Wait again to make sure the element is clickable
+#         WebDriverWait(context.driver, 20).until(
+#             EC.element_to_be_clickable(ADD_TO_CART_BTN)
+#         )
+#
+#         add_to_cart_button.click()
+#         print(f"Product {product} selected for the cart.")
+#     except Exception as e:
+#         print(f"Failed to add {product} selected for the cart: {e}")
+#         raise
+#     # Step 2a: Wait for the "Add to Cart navigation" button to be clickable and scroll it into view
+#     try:
+#         add_to_cart_side_nav_button = WebDriverWait(context.driver, 20).until(
+#             EC.element_to_be_clickable(ADD_TO_CART_SIDE_NAV_BTN)
+#         )
+#
+#         # Scroll the button into view
+#         context.driver.execute_script("arguments[0].scrollIntoView(true);", add_to_cart_side_nav_button)
+#
+#         add_to_cart_side_nav_button.click()
+#         print(f"Product {product} added to the cart.")
+#     except Exception as e:
+#         print(f"Failed to add {product} to the cart: {e}")
+#         raise
+#
+#     sleep(2)  # Wait for the item to be added to the cart
+#
+#
+#     try:
+#         cart_icon = WebDriverWait(context.driver, 20).until(
+#             EC.element_to_be_clickable(CART_ICON)
+#         )
+#         cart_icon.click()
+#         print("Cart icon clicked successfully.")
+#     except Exception as e:
+#         print(f"Failed to click on cart icon: {e}")
+#         raise
 
 
 @when('Open the first {product} from the search results')
@@ -152,20 +156,20 @@ def select_and_verify_colors(context):
 
 
 # Step 4: Verify the product is in the cart
-@then('Verify {product} added to cart')
-def verify_add_to_cart(context, product):
-    try:
-        cart_item = context.driver.find_element(*CART_ITEM)
-        assert product in cart_item.text, f"Product {product} is not in the cart"
-        print(f"Test Passed: Product {product} is in the cart.")
-    except Exception as e:
-        print(f"Test Failed: Product {product} is not in the cart. Error: {e}")
-        raise
-
-    # Step 5: Optionally, verify the total price or cart items count
-    try:
-        total_price = context.driver.find_element(*TOTAL_PRICE).text
-        print(f"Total price in the cart: {total_price}")
-    except Exception as e:
-        print(f"Unable to retrieve total price. Error: {e}")
-        raise
+# @then('Verify {product} added to cart')
+# def verify_add_to_cart(context, product):
+#     try:
+#         cart_item = context.driver.find_element(*CART_ITEM)
+#         assert product in cart_item.text, f"Product {product} is not in the cart"
+#         print(f"Test Passed: Product {product} is in the cart.")
+#     except Exception as e:
+#         print(f"Test Failed: Product {product} is not in the cart. Error: {e}")
+#         raise
+#
+#     # Step 5: Optionally, verify the total price or cart items count
+#     try:
+#         total_price = context.driver.find_element(*TOTAL_PRICE).text
+#         print(f"Total price in the cart: {total_price}")
+#     except Exception as e:
+#         print(f"Unable to retrieve total price. Error: {e}")
+#         raise
