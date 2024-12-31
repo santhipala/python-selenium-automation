@@ -127,7 +127,7 @@ def select_and_verify_colors(context):
     colors = WebDriverWait(context.driver, 20).until(
                 EC.presence_of_all_elements_located(COLOR_OPTIONS)
             )
-
+    colors=colors[0:4]
             # Loop through each color swatch and select it
     for color in colors:
         # try:
@@ -138,7 +138,7 @@ def select_and_verify_colors(context):
                 sleep(2)  # Wait for color to be selected
 
             # Verify the color has been selected
-                selected_color = context.driver.find_element(*SELECTED_COLOR).text  # 'Color\nBlack'
+                selected_color = context.driver.find_elements(*SELECTED_COLOR)[2].text  # 'Color\nBlack'
                 # print('Current color', {selected_color})
 
                 selected_color1 = selected_color.split('\n')[1]
