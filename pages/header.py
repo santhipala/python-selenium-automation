@@ -10,6 +10,7 @@ class Header(BasePage):
     CART_ICON = (By.XPATH, "//div[@data-test='@web/CartIcon']")
     SIGN_IN_BTN=(By.CSS_SELECTOR,"[data-test='@web/AccountLink']")
     SIDE_NAV_SIGN_IN_BTN=(By.CSS_SELECTOR,"button[data-test='accountNav-signIn']")
+
     def search_product(self):
         self.input_text('coffee',*self.SEARCH_PRODUCT)
         self.click(*self.SEARCH_BTN)
