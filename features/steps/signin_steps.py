@@ -1,8 +1,4 @@
-import selenium
-from selenium.webdriver.common.by import By
 from behave import given, when, then
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 
@@ -12,6 +8,20 @@ def open_signin_page(context):
     context.app.header.sign_in()
     context.app.header.side_nav_sign_in()
     sleep(3)
+
+@when('Enter incorrect email and password combination')
+def enter_username_password(context):
+    context.app.signin_page.enter_username('sang@gmail.com')
+    context.app.signin_page.enter_password('Sanser@20')
+    sleep(3)
+
+@when('Click on Sign In button')
+def click_signin_btn(context):
+    context.app.signin_page.click_signin()
+
+@then('Verify login Error message is displayed')
+def verify_login_message(context):
+    context.app.signin_page.verify_login_message()
 
 @when('Store original window')
 def store_original_window(context):

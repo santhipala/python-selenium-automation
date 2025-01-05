@@ -7,6 +7,7 @@ from pages.signin_page import SigninPage
 from pages.cart_page import CartPage
 from pages.search_results_page import SearchResultsPage
 from pages.terms_and_conditions_page import TermsAndConditionsPage
+from pages.help_page import HelpPage
 
 
 class Application:
@@ -19,3 +20,4 @@ class Application:
         self.cart_page = CartPage(driver)
         self.search_results_page = SearchResultsPage(driver)
         self.terms_and_conditions_page = TermsAndConditionsPage(driver)
+        self.help_page = HelpPage(driver)

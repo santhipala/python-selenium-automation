@@ -14,3 +14,9 @@ Feature: Verify logged-out user can navigate to the Sign In page
     And Switch to the newly opened window
     Then Verify Terms and Conditions page is opened
     And User can close new window and switch back to original
+
+   Scenario: Sign in with wrong username and password then verify login error message
+    Given Open sign in page
+    When Enter incorrect email and password combination
+    And Click on Sign In button
+    Then Verify login Error message is displayed
